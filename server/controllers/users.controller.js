@@ -1,5 +1,6 @@
 const users = require("../models/users");
 const groupsModel = require("../models/groups");
+
 async function createUser(req, res) {
   try {
     const user = await users.createUser(req.body.uid, req.body.name);
