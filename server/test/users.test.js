@@ -46,11 +46,37 @@ describe('addGroup', function () {
 
 });
 
-describe('getGroups', function () {
-
-});
 
 
 describe('findUser', function () {
+  beforeEach( async () => {
+    await Users.createUser("testuid", "foo")
+  })
+
+  it("should return the user", async function () {
+    const user = await Users.findUser("testuid")
+    expect(user.uid).to.eql("testuid");
+  });
+
+});
+
+describe('getGroups',  function () {
+
+  beforeEach( async () => {
+    await Users.createUser("testuid", "foo")
+    await Users.addGroup("testuid", group);
+  })
+
+  const group = {
+    _id: "123456789",
+    groupName: 'testGroup',
+    password: "testPassword",
+  }
+
+  it("should return the group array ", async function () {
+    const user = await Users.findUser("testuid")
+    const groups = await Users.getGroups("testuid");
+    expect(user.groups).to.eql(groups);
+  });
 
 });

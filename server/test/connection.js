@@ -17,6 +17,8 @@ before(function (done) {
 // Drop the users collection before each test
 beforeEach(function (done) {
   mongoose.connection.collections.users.drop(() => {
-    done();
+    mongoose.connection.collections.groups.drop(() => {
+      done();
+    });
   });
 });

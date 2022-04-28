@@ -74,7 +74,8 @@ async function createGroup(req, res) {
     }
   } catch (err) {
     console.log(err);
-    res.send("501");
+    res.status(501);
+    res.send("501")
   }
 }
 async function getGroup(req, res) {

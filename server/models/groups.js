@@ -1,44 +1,50 @@
 const {Groups} = require('./index')
 
 async function getExpenses(id){
-  const gotGroup = await Groups.find({_id : id});
-  return gotGroup[0].expenses;
+  const gotGroup = await Groups.findOne({_id : id});
+  return gotGroup.expenses;
 }
 
 async function getGroup(password){
-  const gotGroup = await Groups.find({password :password});
-  return gotGroup[0];
+  const gotGroup = await Groups.findOne({password :password});
+  return gotGroup;
 }
 
 async function addUser(id, user){
-  return await Groups.updateOne(
+  return await Groups.findOneAndUpdate(
     { _id: id }, 
-    { $push: { users: user } }
+    { $push: { users: user } }, 
+    {
+      new: true
+    }
 );
 }
 
 async function createExpense(id, expense){
-  return await Groups.updateOne(
+  return await Groups.findOneAndUpdate(
     { _id: id }, 
-    { $push: { expenses: expense } }
+    { $push: { expenses: expense } }, 
+    {
+      new: true
+    }
 );
 }
 
 async function deleteExpense(id){
   console.log('deleting');
-  return await Groups.updateOne(
+  return await Groups.findOneAndUpdate(
     { _id: id }, 
-    { expenses: [] }
+    { expenses: [] }, 
+    {
+      new: true
+    }
 );
   }
 
   async function createGroup(group){
-    try {
+
       return await Groups.create(group);
-    } catch (error) {
-      console.log(error);
-      return 'error'
-    }
+
   }
   
 

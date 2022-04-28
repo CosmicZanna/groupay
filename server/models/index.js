@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 const GroupSchema = new mongoose.Schema({
-  groupName: String,
+  groupName: {
+    type: String,
+    required: true
+  },
   users: [String],
   password: String, //this is cool btw
-  expenses: [{
+  expenses: [{ //create expenses Schema
     title: {
       type: String,
       required: true
