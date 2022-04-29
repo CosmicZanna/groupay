@@ -3,8 +3,8 @@ const { expect } = require('chai');
 const should = require('chai').should();
 const { getAuth, deleteUser } = require("firebase/auth");
 
-const app = require("./firebase_test");
-const auth = app.auth()
+const app = require("../firebase_test");
+const auth = app.auth();
 
 
 function signup(email, password) {
@@ -43,3 +43,5 @@ describe('Authentication', function () {
 
 
 });
+
+module.exports = { signup };

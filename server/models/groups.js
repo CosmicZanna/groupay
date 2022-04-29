@@ -31,7 +31,6 @@ async function createExpense(id, expense){
 }
 
 async function deleteExpense(id){
-  console.log('deleting');
   return await Groups.findOneAndUpdate(
     { _id: id }, 
     { expenses: [] }, 

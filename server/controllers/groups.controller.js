@@ -64,7 +64,6 @@ async function createGroup(req, res) {
     };
     const group = await groups.createGroup(newGroup);
     if (group) {
-      console.log(group);
       await users.addGroup(req.body.uid, {
         _id: group._id,
         groupName: group.groupName,
