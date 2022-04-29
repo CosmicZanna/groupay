@@ -26,7 +26,7 @@ async function joinGroup(req, res) {
         res.status(401);
         res.send("already in group");
       } else {
-        await groupsModel.addUser(group._id, req.body.uid);
+        group = await groupsModel.addUser(group._id, req.body.uid);
         await users.addGroup(req.body.uid, {
           _id: group._id,
           groupName: group.groupName,
