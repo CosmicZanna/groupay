@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const should = require('chai').should();
 const Groups = require('../models/groups');
 const ADLER32 = require("adler-32");
+const { mockGroup, mockExpense } = require('./mock');
 
 describe('-------Group Model--------', function () {
 
@@ -9,13 +10,7 @@ describe('-------Group Model--------', function () {
 
     const password_1 = ADLER32.str(Date.now().toString());
     const password_2 = ADLER32.str(Date.now().toString());
-    const mockGroup = {
-      groupName: "testgroup",
-      users: [],
-      expenses: []
-    };
-
-
+    
     it("should create the group", async function () {
       const group = await Groups.createGroup({ ...mockGroup, password: password_1 });
       group.isNew.should.be.false;
@@ -35,8 +30,6 @@ describe('-------Group Model--------', function () {
         .catch(err => {
           expect(err._message).to.eql('groups validation failed');
         });
-
-
     });
   });
 
@@ -44,13 +37,6 @@ describe('-------Group Model--------', function () {
     beforeEach(async () => {
       await Groups.createGroup(mockGroup)
     })
-
-    const mockGroup = {
-      groupName: "testgroup",
-      users: [],
-      expenses: [],
-      password: ADLER32.str(Date.now().toString())
-    };
 
     it("should return a group", async function () {
       const group = await Groups.getGroup(mockGroup.password);
@@ -71,12 +57,6 @@ describe('-------Group Model--------', function () {
       await Groups.createGroup(mockGroup)
     })
 
-    const mockGroup = {
-      groupName: "testgroup",
-      users: [],
-      expenses: [],
-      password: ADLER32.str(Date.now().toString())
-    };
     const user = "testuid"
 
     it("should add user to the group", async function () {
@@ -89,16 +69,7 @@ describe('-------Group Model--------', function () {
   describe('createExpense', function () {
     beforeEach(async () => {
       await Groups.createGroup(mockGroup)
-    })
-
-    const mockGroup = {
-      groupName: "testgroup",
-      users: [],
-      expenses: [],
-      password: ADLER32.str(Date.now().toString())
-    };
-
-    const mockExpense = { title: "newexpense", value: 300, currency: "USD", tag: "casa", payer: "testUID", payerName: "gabriele" }
+    });
 
     it("should create one expense in a group", async function () {
       const group = await Groups.getGroup(mockGroup.password);
@@ -111,23 +82,13 @@ describe('-------Group Model--------', function () {
   describe('getExpenses', function () {
     beforeEach(async () => {
       await Groups.createGroup(mockGroup)
-    })
-
-    const mockGroup = {
-      groupName: "testgroup",
-      users: [],
-      expenses: [],
-      password: ADLER32.str(Date.now().toString())
-    };
-
-    const mockExpense = { title: "newexpense", value: 300, currency: "USD", tag: "casa", payer: "testUID", payerName: "gabriele" }
+    });
 
     it("should return the expenses of a group", async function () {
       const group = await Groups.getGroup(mockGroup.password);
       const newGroup = await Groups.createExpense(group._id, mockExpense);
       const expenses = await Groups.getExpenses(newGroup._id);
       expect(expenses.map(e => e.title)).to.include(mockExpense.title)
-
     });
 
   });
@@ -135,33 +96,15 @@ describe('-------Group Model--------', function () {
 
   describe('deleteExpense', function () {
     beforeEach(async () => {
-      await Groups.createGroup(mockGroup)
-    })
-
-    const mockGroup = {
-      groupName: "testgroup",
-      users: [],
-      expenses: [],
-      password: ADLER32.str(Date.now().toString())
-    };
-
-    const mockExpense = { 
-      title: "newexpense", 
-      value: 300, 
-      currency: "USD", 
-      tag: "casa", 
-      payer: "testUID", 
-      payerName: "gabriele" 
-    }
+      await Groups.createGroup(mockGroup);
+    });
 
     it("should delete all the expenses", async function () {
       const group = await Groups.getGroup(mockGroup.password);
       const newGroup = await Groups.createExpense(group._id, mockExpense);
       const expenses = await Groups.deleteExpense(newGroup._id);
-      expect(expenses.expenses).to.be.empty
-
+      expect(expenses.expenses).to.be.empty;
     });
-
   });
 
 });

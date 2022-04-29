@@ -4,35 +4,41 @@ const GroupSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  users: [String],
+  users: {
+    type: [String],
+    default: [],
+  },
   password: String, //this is cool btw
-  expenses: [{ //create expenses Schema
-    title: {
-      type: String,
-      required: true
-    },
-     pictureUrl: String,
-    value: {
-      type: Number,
-      required: true
-    },
-    currency: {
-      type: String,
-      required: true
-    },
-    tag: {
-      type: String,
-      required: true
-    },
-    payer: {
-      type: String,
-      required: true
-    },
-    payerName: {
-      type: String,
-      required: true
-    }
-  }]
+  expenses: {
+    type: [{ //create expenses Schema
+      title: {
+        type: String,
+        required: true
+      },
+       pictureUrl: String,
+      value: {
+        type: Number,
+        required: true
+      },
+      currency: {
+        type: String,
+        required: true
+      },
+      tag: {
+        type: String,
+        required: true
+      },
+      payer: {
+        type: String,
+        required: true
+      },
+      payerName: {
+        type: String,
+        required: true
+      }
+    }],
+    default: []
+  }
 
 }, {timestamps: false})
 

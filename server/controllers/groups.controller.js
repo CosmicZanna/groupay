@@ -10,11 +10,11 @@ async function createExpense(req, res) {
         const expense = req.body.expense;
         expense.payer = req.body.uid;
         expense.payerName = user.name;
-        const Newexpense = await groups.createExpense(
+        const newExpenses = await groups.createExpense(
           req.body.group,
           expense
         );
-        return res.send(Newexpense);
+        return res.send(newExpenses);
       }
     }
     res.status(400);
@@ -55,7 +55,6 @@ async function createGroup(req, res) {
     const newGroup = {
       groupName: req.body.groupName,
       users: [req.body.uid],
-      expenses: [],
       password: ADLER32.str(Date.now().toString()),
     };
     const group = await groups.createGroup(newGroup);

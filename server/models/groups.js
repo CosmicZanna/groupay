@@ -6,47 +6,35 @@ async function getExpenses(id){
 }
 
 async function getGroup(password){
-  const gotGroup = await Groups.findOne({password :password});
-  return gotGroup;
+  return await Groups.findOne({password :password});
 }
 
 async function addUser(id, user){
   return await Groups.findOneAndUpdate(
     { _id: id }, 
     { $push: { users: user } }, 
-    {
-      new: true
-    }
-);
+    { new: true }
+  );
 }
 
 async function createExpense(id, expense){
   return await Groups.findOneAndUpdate(
     { _id: id }, 
     { $push: { expenses: expense } }, 
-    {
-      new: true
-    }
-);
+    { new: true }
+  );
 }
 
 async function deleteExpense(id){
   return await Groups.findOneAndUpdate(
     { _id: id }, 
     { expenses: [] }, 
-    {
-      new: true
-    }
-);
-  }
+    { new: true }
+  );
+}
 
-  async function createGroup(group){
+async function createGroup(group){
+  return await Groups.create(group);
+}
 
-      return await Groups.create(group);
-
-  }
-  
-
-
-
-module.exports = {addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup}
+module.exports = { addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup };

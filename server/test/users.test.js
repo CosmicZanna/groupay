@@ -1,6 +1,6 @@
 const { expect } = require('chai');
-const should = require('chai').should();
 const Users = require('../models/users');
+const { group } = require('./mock');
 
 describe('--------User Model---------', function () {
   describe('createUser', function () {
@@ -32,12 +32,6 @@ describe('--------User Model---------', function () {
       await Users.createUser("testuid", "foo")
     })
 
-    const group = {
-      _id: "123456789",
-      groupName: 'testGroup',
-      password: "testPassword",
-    }
-
     it("should create a group for a user", async function () {
       const user = await Users.addGroup("testuid", group);
       expect(user.groups.map(g => g._id)).to.deep.include(group._id);
@@ -63,12 +57,6 @@ describe('--------User Model---------', function () {
       await Users.createUser("testuid", "foo")
       await Users.addGroup("testuid", group);
     })
-
-    const group = {
-      _id: "123456789",
-      groupName: 'testGroup',
-      password: "testPassword",
-    }
 
     it("should return the group array ", async function () {
       const user = await Users.findUser("testuid")

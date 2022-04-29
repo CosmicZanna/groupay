@@ -1,5 +1,4 @@
-const { Users } = require('./index')
-
+const { Users } = require('./index');
 
 async function createUser(uid, name){
   const newUser = new Users({uid: uid, name: name, groups: []});
@@ -16,7 +15,8 @@ async function addGroup(uid, group){
   return await Users.findOneAndUpdate(
     { uid: uid }, 
     { $push: { groups: group}},
-    { new: true });
+    { new: true }
+  );
 }
 
 async function findUser(uid){
@@ -25,4 +25,4 @@ async function findUser(uid){
 
 
 
-module.exports = {createUser, getGroups, findUser, addGroup}
+module.exports = { createUser, getGroups, findUser, addGroup };

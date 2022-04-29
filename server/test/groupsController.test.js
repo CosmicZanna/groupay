@@ -1,12 +1,11 @@
 const { signup } = require('./auth.test');
-const { getAuth, deleteUser } = require("firebase/auth");
+const { deleteUser } = require("firebase/auth");
 const { expect } = require('chai');
-const should = require('chai').should();
 const request = require('supertest');
 const app = require('../index');
 const Group = require('../models/groups');
 const User = require('../models/users');
-const ADLER32 = require("adler-32");
+const { mockGroup, mockExpense } = require('./mock');
 
 describe('-------Groups Controller-------', function () {
 
@@ -52,13 +51,6 @@ describe('-------Groups Controller-------', function () {
     });
 
     it('should return a group by password', async function () {
-      const mockGroup = {
-        groupName: "testgroup",
-        users: [],
-        expenses: [],
-        password: ADLER32.str(Date.now().toString()),
-      };
-
       const group = await Group.createGroup(mockGroup)
       const authToken = await userAuth.user.getIdToken();
 
@@ -88,24 +80,10 @@ describe('-------Groups Controller-------', function () {
     });
 
     it('should create an expense', async function () {
-      const mockGroup = {
-        groupName: "testgroup",
-        users: [],
-        expenses: [],
-        password: ADLER32.str(Date.now().toString()),
-      };
       const authToken = await userAuth.user.getIdToken();
       const dbUser = await User.createUser(userAuth.user.uid, "testName");
       const group = await Group.createGroup(mockGroup);
       await User.addGroup(dbUser.uid, group);
-      const mockExpense = { 
-        title: "newexpense", 
-        value: 300, 
-        currency: "USD", 
-        tag: "casa", 
-        payer: "testUID", 
-        payerName: "gabriele" 
-      }
 
       request(app)
         .post('/expenses')
@@ -135,21 +113,6 @@ describe('-------Groups Controller-------', function () {
     });
 
     it('should get all the expenses of a group', async function () {
-      const mockGroup = {
-        groupName: "testgroup",
-        users: [],
-        expenses: [],
-        password: ADLER32.str(Date.now().toString()),
-      }; 
-      const mockExpense = {
-        title: "newexpense",
-        value: 300,
-        currency: "USD",
-        tag: "casa",
-        payer: "testUID",
-        payerName: "gabriele"
-      }
-
       const authToken = await userAuth.user.getIdToken();
       const dbUser = await User.createUser(userAuth.user.uid, "testName");
       const group = await Group.createGroup(mockGroup);
@@ -184,12 +147,6 @@ describe('-------Groups Controller-------', function () {
 
     it('should delete an expense in a group', async function () {
       const authToken = await userAuth.user.getIdToken();
-      const mockGroup = {
-        groupName: "testgroup",
-        users: [],
-        expenses: [],
-        password: ADLER32.str(Date.now().toString())
-      };
       await Group.createGroup(mockGroup)
       const group = await Group.getGroup(mockGroup.password);
 
