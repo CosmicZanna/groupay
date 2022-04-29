@@ -145,7 +145,14 @@ describe('-------Group Model--------', function () {
       password: ADLER32.str(Date.now().toString())
     };
 
-    const mockExpense = { title: "newexpense", value: 300, currency: "USD", tag: "casa", payer: "testUID", payerName: "gabriele" }
+    const mockExpense = { 
+      title: "newexpense", 
+      value: 300, 
+      currency: "USD", 
+      tag: "casa", 
+      payer: "testUID", 
+      payerName: "gabriele" 
+    }
 
     it("should delete all the expenses", async function () {
       const group = await Groups.getGroup(mockGroup.password);

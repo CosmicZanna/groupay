@@ -4,7 +4,6 @@ const ADLER32 = require("adler-32");
 
 async function createExpense(req, res) {
   try {
-    console.log(req.body, '<-BODY');
     const user = await users.findUser(req.body.uid);
     for (let userGroup of user.groups) {
       if (userGroup._id === req.body.group) {
@@ -15,8 +14,7 @@ async function createExpense(req, res) {
           req.body.group,
           expense
         );
-        res.send(Newexpense);
-        return;
+        return res.send(Newexpense);
       }
     }
     res.status(400);
@@ -29,7 +27,6 @@ async function createExpense(req, res) {
 }
 async function deleteExpense(req, res) {
   try {
-    console.log(req.body.group);
     const expense = await groups.deleteExpense(req.body.group);
     res.send(expense);
   } catch (err) {
@@ -44,8 +41,7 @@ async function getExpenses(req, res) {
     for (let group of user.groups) {
       if (group._id === req.headers.groupid) {
         const groupExpenses = await groups.getExpenses(req.headers.groupid);
-        res.send(groupExpenses);
-        return;
+        return res.send(groupExpenses);
       }
     }
     res.send("group not found in user");
