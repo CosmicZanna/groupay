@@ -10,41 +10,45 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState();
   const [signing, setSigning] = useState(false);
 
   function signup(email, password) {
     setSigning(true)
     return auth.createUserWithEmailAndPassword(email, password);
-
   }
+
   function login(email, password) {
     setSigning(true)
     return auth.signInWithEmailAndPassword(email, password);
   }
+
   function logout() {
-    setSigning(false)
+    setSigning(false);
+    setToken();
+    setLoading(true);
     return auth.signOut();
   }
 
   useEffect(() => {
-    const unsubscibe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
       if (user) {
         const authToken = await user.getIdToken();
+        setLoading(false);
         setToken(authToken);
       }
     });
-    return unsubscibe;
+    return unsubscribe;
   }, [signing]);
 
-  useEffect(() => {
-    if (token !== 'loading') setLoading(false);
-  }, [token]);
+  // useEffect(() => {
+  //   if (token !== 'loading') setLoading(false);
+  // }, [token]);
   
   return (
     <AuthContext.Provider value={{ currentUser, signup, login, logout, token }}>
-      {!loading && children}
+      { ( loading || token ) && children }
     </AuthContext.Provider>
   );
 }
