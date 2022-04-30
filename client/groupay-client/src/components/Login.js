@@ -14,7 +14,7 @@ export default function Login() {
         e.preventDefault();
         try{
             setLoading(true)
-            const user = await login(emailRef.current.value, passwordRef.current.value)
+            await login(emailRef.current.value, passwordRef.current.value)
             navigate('/')
         }
         catch(err){

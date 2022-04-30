@@ -32,8 +32,7 @@ async function joinGroup(req, res) {
           groupName: group.groupName,
           password: group.password,
         });
-        res.send(group);
-        return;
+        return res.send(group);
       }
     } else {
       res.status(400);

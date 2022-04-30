@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Navbar, Container, Row, Col, Card } from "react-bootstrap";
+import { Button, Navbar, Container, Card } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import apiServices from "../services/apiService";
@@ -30,7 +30,12 @@ export default function Dashboard() {
     //refactor to use async await
     if (token) {
       apiServices.getGroups(token, currentUser.uid).then((items) => {
-        let newGroupList = [...groupList, ...items];
+        let newGroupList = [];
+        if (Array.isArray(items)) {
+          newGroupList = [...groupList, ...items];
+        } else {
+          newGroupList = [...groupList];
+        }
         let groups = newGroupList.map((group, i) => (
           <>
             <Card
@@ -38,7 +43,7 @@ export default function Dashboard() {
               style={{ maxWidth: "18rem", width: "100%", minWidth: "15rem"}}
             >
               <Card.Header className="d-flex align-items-center">
-                <img className="" src={groupSvg}></img>
+                <img className="" src={groupSvg} alt="users"></img>
                 <p className="mb-0 ml-3" style={{marginLeft: "5px"}}>{Math.floor(Math.random() * (5 - 2 + 1) + 2)}</p> {/* //mock data */}
                 </Card.Header>
               <Card.Body>
@@ -80,8 +85,8 @@ export default function Dashboard() {
       </Container>
       </Container>
       <Container className="d-flex align-items-center justify-content-around mt-4 mb-3">
-        <CreateGroup ></CreateGroup>
-        <JoinGroup></JoinGroup>
+        <CreateGroup />
+        <JoinGroup />
       </Container>
     </div>
   );

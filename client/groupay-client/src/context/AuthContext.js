@@ -34,15 +34,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (token != 'loading') setLoading(false);
+    if (token !== 'loading') setLoading(false);
   }, [token]);
-  /* const value = {
-        currentUser,
-        signup,
-        login,
-        logout,
-        token
-    }   */
+  
   return (
     <AuthContext.Provider value={{ currentUser, signup, login, logout, token }}>
       {!loading && children}
