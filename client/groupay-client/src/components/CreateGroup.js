@@ -8,6 +8,7 @@ export default function CreateGroup() {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { currentUser, token } = useAuth();
+
   function onInput({ target: { value } }) {
     setValue(value);
   }
@@ -16,14 +17,14 @@ export default function CreateGroup() {
     e.preventDefault();
     if(value.length > 1){
     try {
-      const newGroup = await apiServices.createNewGroup(
+      const result = await apiServices.createNewGroup(
         token,
         currentUser.uid,
-        value
+        value,
       );
-      console.log(newGroup);
-      setValue();
-      navigate(`/group/${value}`, { state: { group: newGroup.data } })
+      setValue('');
+      if (result.status >= 400) throw new Error('Group Not created');
+      navigate(`/group/${value}`, { state: { group: result.data } })
     } catch (error) {
       console.log(error);
     }}

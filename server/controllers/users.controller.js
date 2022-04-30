@@ -40,7 +40,7 @@ async function joinGroup(req, res) {
     }
   } catch (err) {
     console.log(err);
-    res.send("400");
+    res.status(400).send(err._message);
   }
 }
 

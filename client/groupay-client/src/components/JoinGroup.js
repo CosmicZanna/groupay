@@ -8,6 +8,7 @@ export default function CreateGroup() {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { currentUser, token } = useAuth();
+
   function onInput({ target: { value } }) {
     setValue(value);
   }
@@ -16,17 +17,18 @@ export default function CreateGroup() {
     e.preventDefault();
     if(value.length > 1){
       try {
-        const joined = await apiServices.joinGroup(
+        const result = await apiServices.joinGroup(
           token,
           currentUser.uid,
-          value
+          value,
         );
-        console.log(joined);
-      setValue('');
-      navigate(`/group/${joined.data.groupName}`, { state: { group: joined.data } })
-    } catch (error) {
-      console.log(error);
-    }}
+        setValue('');
+        if (result.status >= 400) throw new Error('Not joined');
+        navigate(`/group/${result.data.groupName}`, { state: { group: result.data } })
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   return (
