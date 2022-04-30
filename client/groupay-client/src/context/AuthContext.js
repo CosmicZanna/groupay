@@ -11,14 +11,19 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("");
+  const [signing, setSigning] = useState(false);
 
   function signup(email, password) {
+    setSigning(true)
     return auth.createUserWithEmailAndPassword(email, password);
+
   }
   function login(email, password) {
+    setSigning(true)
     return auth.signInWithEmailAndPassword(email, password);
   }
   function logout() {
+    setSigning(false)
     return auth.signOut();
   }
 
@@ -31,7 +36,7 @@ export function AuthProvider({ children }) {
       }
     });
     return unsubscibe;
-  }, []);
+  }, [signing]);
 
   useEffect(() => {
     if (token !== 'loading') setLoading(false);

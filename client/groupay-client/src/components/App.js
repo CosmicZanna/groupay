@@ -13,7 +13,7 @@ function AppNavigation () {
 
   const appNotLogged = (
     <>
-      <Route exact path='/' element={<Spinner />} />
+      <Route exact path='/' element={<Login />} />
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<Signup />}/>
     </>
@@ -22,7 +22,10 @@ function AppNavigation () {
   const appLogged = (
     <>
       <Route exact path='/' element={<Dashboard />} />
+      <Route path='/login' element={<Dashboard />} />
+      <Route path='/signup' element={<Dashboard />} />
       <Route path="/group/:groupName" element={<GroupPage />} />
+      <Route path="*" element={<h1>404 page not found</h1>} />
     </>
   );
 
