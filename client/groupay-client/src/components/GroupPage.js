@@ -11,6 +11,8 @@ import { NavBar } from "./NavBar";
 
 import CreateExpense from "./CreateExpense";
 import splitPayments from "../services/paymentService"
+import Expense from './Expense';
+import Owes from './Owes';
 
 export default function GroupPage() {
   const [expenses, setExpenses] = useState([]);
@@ -112,22 +114,7 @@ export default function GroupPage() {
           <ListGroup className="shadow-sm">
             {expenses.length > 0 &&
               expenses.map((expense, i) => (
-                <ListGroup.Item
-                  key={i}
-                  className="m-0 d-flex justify-content-between align-items-center"
-                >
-                  <div className="p-2">
-                    <h3>
-                      {expense.tag} {expense.title}
-                    </h3>
-                    <p className="mb-0 text-muted">
-                      Paid by: {expense.payerName}
-                    </p>
-                  </div>
-                  <h3 className="border rounded p-3 bg-dark text-white">
-                    €{expense.value}
-                  </h3>
-                </ListGroup.Item>
+                <Expense expense={expense} key={i}></Expense>
               ))}
           </ListGroup>
         </Container>
@@ -138,11 +125,7 @@ export default function GroupPage() {
           <ListGroup className="shadow-sm">
             {owes.length > 0 &&
               owes.map((owe, i) => (
-                <ListGroup.Item key={i}>
-                  <h3 className="m-0" key={i}>
-                    {owe}
-                  </h3>
-                </ListGroup.Item>
+                <Owes owe={owe} key={i}></Owes>
               ))}
           </ListGroup>
         </Container>
