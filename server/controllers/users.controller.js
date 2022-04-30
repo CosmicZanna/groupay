@@ -1,5 +1,6 @@
 const users = require("../models/users");
 const groupsModel = require("../models/groups");
+
 async function createUser(req, res) {
   try {
     const user = await users.createUser(req.body.uid, req.body.name);
@@ -25,14 +26,13 @@ async function joinGroup(req, res) {
         res.status(401);
         res.send("already in group");
       } else {
-        await groupsModel.addUser(group._id, req.body.uid);
+        group = await groupsModel.addUser(group._id, req.body.uid);
         await users.addGroup(req.body.uid, {
           _id: group._id,
           groupName: group.groupName,
           password: group.password,
         });
-        res.send(group);
-        return;
+        return res.send(group);
       }
     } else {
       res.status(400);

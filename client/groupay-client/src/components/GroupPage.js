@@ -3,9 +3,7 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import apiServices from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
 import {
-  Form,
   Button,
-  Card,
   Navbar,
   Container,
   ListGroup,
@@ -17,7 +15,7 @@ import CreateExpense from "./CreateExpense";
 export default function GroupPage() {
   const [expenses, setExpenses] = useState([]);
   const [total, setTotal] = useState(0);
-  const [totals, setTotals] = useState({});
+  // const [totals, setTotals] = useState({});
   const [owes, setOwes] = useState([]);
   const [groupWithUsers, setgroupWithUsers] = useState({});
   const { currentUser, token, logout } = useAuth();
@@ -89,18 +87,18 @@ export default function GroupPage() {
   useEffect(() => {
     if (expenses.length > 0 && groupWithUsers.users.length > 0) {
       let newTotal = 0;
-      let othersExpenses = 0;
+      // let othersExpenses = 0;
       let newTotals = {};
       for (let expense of expenses) {
         newTotal += expense.value;
         if (newTotals[expense.payerName])
           newTotals[expense.payerName] += expense.value;
         else newTotals[expense.payerName] = expense.value;
-        if (expense.payer !== currentUser.uid) {
-          othersExpenses += expense.value;
-        }
+        // if (expense.payer !== currentUser.uid) {
+        //   othersExpenses += expense.value;
+        // }
       }
-      setTotals(newTotals);
+      // setTotals(newTotals);
       setTotal(newTotal);
       splitPayments(newTotals);
     }
@@ -108,7 +106,7 @@ export default function GroupPage() {
   async function clearExpenses(e) {
     e.preventDefault();
     try {
-      let cancelled = await apiServices.cancelExpenses(
+      await apiServices.cancelExpenses(
         token,
         currentUser.uid,
         group._id);

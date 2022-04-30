@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Dropdown } from "react-bootstrap";
 import apiServices from "../services/apiService";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function CreateExpense({ group, setExpenses }) {
@@ -21,7 +20,7 @@ export default function CreateExpense({ group, setExpenses }) {
     apiServices
         .getUser(token, currentUser.uid)
         .then((user) => {setActiveUser(user)});}
-  }, [currentUser])
+  }, [token, currentUser]);
   
   async function createExpense(e) {
     e.preventDefault();
@@ -36,7 +35,7 @@ export default function CreateExpense({ group, setExpenses }) {
           payer: currentUser.uid,
           payerName: activeUser.name
         }
-        const ack = await apiServices.createNewExpense(
+        await apiServices.createNewExpense(
           token,
           currentUser.uid,
           group._id, 

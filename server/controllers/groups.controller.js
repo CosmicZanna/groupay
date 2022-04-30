@@ -4,19 +4,17 @@ const ADLER32 = require("adler-32");
 
 async function createExpense(req, res) {
   try {
-    console.log(req.body, '<-BODY');
     const user = await users.findUser(req.body.uid);
     for (let userGroup of user.groups) {
       if (userGroup._id === req.body.group) {
         const expense = req.body.expense;
         expense.payer = req.body.uid;
         expense.payerName = user.name;
-        const Newexpense = await groups.createExpense(
+        const newExpenses = await groups.createExpense(
           req.body.group,
           expense
         );
-        res.send(Newexpense);
-        return;
+        return res.send(newExpenses);
       }
     }
     res.status(400);
@@ -29,7 +27,6 @@ async function createExpense(req, res) {
 }
 async function deleteExpense(req, res) {
   try {
-    console.log(req.body.group);
     const expense = await groups.deleteExpense(req.body.group);
     res.send(expense);
   } catch (err) {
@@ -44,8 +41,7 @@ async function getExpenses(req, res) {
     for (let group of user.groups) {
       if (group._id === req.headers.groupid) {
         const groupExpenses = await groups.getExpenses(req.headers.groupid);
-        res.send(groupExpenses);
-        return;
+        return res.send(groupExpenses);
       }
     }
     res.send("group not found in user");
@@ -59,12 +55,10 @@ async function createGroup(req, res) {
     const newGroup = {
       groupName: req.body.groupName,
       users: [req.body.uid],
-      expenses: [],
       password: ADLER32.str(Date.now().toString()),
     };
     const group = await groups.createGroup(newGroup);
     if (group) {
-      console.log(group);
       await users.addGroup(req.body.uid, {
         _id: group._id,
         groupName: group.groupName,
@@ -74,7 +68,8 @@ async function createGroup(req, res) {
     }
   } catch (err) {
     console.log(err);
-    res.send("501");
+    res.status(501);
+    res.send("501")
   }
 }
 async function getGroup(req, res) {

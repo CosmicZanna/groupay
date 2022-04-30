@@ -1,35 +1,44 @@
 const mongoose = require('mongoose')
 const GroupSchema = new mongoose.Schema({
-  groupName: String,
-  users: [String],
+  groupName: {
+    type: String,
+    required: true
+  },
+  users: {
+    type: [String],
+    default: [],
+  },
   password: String, //this is cool btw
-  expenses: [{
-    title: {
-      type: String,
-      required: true
-    },
-     pictureUrl: String,
-    value: {
-      type: Number,
-      required: true
-    },
-    currency: {
-      type: String,
-      required: true
-    },
-    tag: {
-      type: String,
-      required: true
-    },
-    payer: {
-      type: String,
-      required: true
-    },
-    payerName: {
-      type: String,
-      required: true
-    }
-  }]
+  expenses: {
+    type: [{ //create expenses Schema
+      title: {
+        type: String,
+        required: true
+      },
+       pictureUrl: String,
+      value: {
+        type: Number,
+        required: true
+      },
+      currency: {
+        type: String,
+        required: true
+      },
+      tag: {
+        type: String,
+        required: true
+      },
+      payer: {
+        type: String,
+        required: true
+      },
+      payerName: {
+        type: String,
+        required: true
+      }
+    }],
+    default: []
+  }
 
 }, {timestamps: false})
 

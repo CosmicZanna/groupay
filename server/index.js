@@ -18,3 +18,5 @@ const port = 3001;
   console.log('Connection has been established successfully.');
   app.listen(port, ()=> console.log('runnin on port 3001'))
 })()
+
+module.exports = app;
