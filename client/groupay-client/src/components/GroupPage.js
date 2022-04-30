@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 import apiServices from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
 import {
   Button,
-  Navbar,
   Container,
   ListGroup,
 } from "react-bootstrap";
-import logo from "../img/token_4.png";
+import { NavBar } from "./NavBar";
 
 import CreateExpense from "./CreateExpense";
+import splitPayments from "../services/paymentService"
 
 export default function GroupPage() {
   const [expenses, setExpenses] = useState([]);
@@ -20,54 +20,9 @@ export default function GroupPage() {
   const [groupWithUsers, setgroupWithUsers] = useState({});
   const { currentUser, token, logout } = useAuth();
   const { state } = useLocation();
-  const navigate = useNavigate();
   const group = state.group;
-  const params = useParams();
-  async function handleLogOut() {
-    try {
-      await logout();
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  function splitPayments(payments) {
-    const people = Object.keys(payments);
-    const valuesPaid = Object.values(payments);
 
-    const sum = valuesPaid.reduce((acc, curr) => curr + acc);
-    const mean = sum / people.length;
-
-    const sortedPeople = people.sort(
-      (personA, personB) => payments[personA] - payments[personB]
-    );
-    const sortedValuesPaid = sortedPeople.map(
-      (person) => payments[person] - mean
-    );
-
-    let i = 0;
-    let j = sortedPeople.length - 1;
-    let debt;
-    let owesArr = [];
-    while (i < j) {
-      debt = Math.min(-sortedValuesPaid[i], sortedValuesPaid[j]);
-      sortedValuesPaid[i] += debt;
-      sortedValuesPaid[j] -= debt;
-
-      owesArr.push(
-        `${sortedPeople[i]} owes ${sortedPeople[j]} €${debt.toFixed(2)}`
-      );
-
-      if (sortedValuesPaid[i] === 0) {
-        i++;
-      }
-
-      if (sortedValuesPaid[j] === 0) {
-        j--;
-      }
-    }
-    setOwes(owesArr);
-  }
+  
 
   useEffect(() => {
     try {
@@ -103,6 +58,8 @@ export default function GroupPage() {
       splitPayments(newTotals);
     }
   }, [expenses, groupWithUsers]);
+
+
   async function clearExpenses(e) {
     e.preventDefault();
     try {
@@ -113,34 +70,20 @@ export default function GroupPage() {
       setExpenses([]);
     } catch (e) {}
   }
+
   function copyToClipBoard() {
     navigator.clipboard.writeText(group.password);
   }
+
   return (
     <>
-      <Navbar bg="dark" variant="dark" className="mb-3">
-        <Container>
-          <Navbar.Brand href="/">
-            <img
-              alt="Yo"
-              src={logo}
-              width="100"
-              height="40"
-              className="d-inline-block align-center"
-            />
-          </Navbar.Brand>
-          <h1 className="text-white">{params.groupName}</h1>
-          <Button className="m-3" onClick={handleLogOut}>
-            Log Out
-          </Button>
-        </Container>
-      </Navbar>
+      <NavBar/>
       <div className="d-flex">
         <Container className="m-5" style={{ maxWidth: "18rem" }}>
           <CreateExpense
             group={group}
             setExpenses={setExpenses}
-          ></CreateExpense>
+          />
           <div className="mt-3 text-center">
             <Button
               variant="dark"
