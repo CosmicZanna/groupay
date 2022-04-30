@@ -5,14 +5,14 @@ import { useAuth } from "../context/AuthContext";
 import {
   Button,
   Container,
-  ListGroup,
 } from "react-bootstrap";
 import { NavBar } from "./NavBar";
 
-import CreateExpense from "./CreateExpense";
 import splitPayments from "../services/paymentService"
-import Expense from './Expense';
-import Owes from './Owes';
+import ExpensesForm from './ExpensesForm';
+import ExpensesList from './ExpensesList';
+import OwesList from './OwesList';
+import InviteButton from './InviteButton';
 
 export default function GroupPage() {
   const [expenses, setExpenses] = useState([]);
@@ -20,7 +20,7 @@ export default function GroupPage() {
   // const [totals, setTotals] = useState({});
   const [owes, setOwes] = useState([]);
   const [groupWithUsers, setgroupWithUsers] = useState({});
-  const { currentUser, token, logout } = useAuth();
+  const { currentUser, token} = useAuth();
   const { state } = useLocation();
   const group = state.group;
 
@@ -81,64 +81,11 @@ export default function GroupPage() {
     <>
       <NavBar/>
       <div className="d-flex">
-        <Container className="m-5" style={{ maxWidth: "18rem" }}>
-          <CreateExpense
-            group={group}
-            setExpenses={setExpenses}
-          />
-          <div className="mt-3 text-center">
-            <Button
-              variant="dark"
-              className="shadow"
-              style={{ fontSize: "25px" }}
-              onClick={clearExpenses}
-            >
-              ✔️ All paid?
-            </Button>
-          </div>
-        </Container>
-        <Container
-          className="m-5 border p-0 shadow"
-          style={{
-            Width: "100%",
-            minWidth: "35rem",
-            maxHeight: "550px",
-            overflow: "scroll s",
-          }}
-        >
-          {
-            <h2 className="text-white bg-dark p-3 mb-0">
-              Total Spent: €{total.toFixed(2)}
-            </h2>
-          }
-          <ListGroup className="shadow-sm">
-            {expenses.length > 0 &&
-              expenses.map((expense, i) => (
-                <Expense expense={expense} key={i}></Expense>
-              ))}
-          </ListGroup>
-        </Container>
-        <Container
-          className="m-5 border shadow p-0"
-          style={{ maxWidth: "18rem" }}
-        >
-          <ListGroup className="shadow-sm">
-            {owes.length > 0 &&
-              owes.map((owe, i) => (
-                <Owes owe={owe} key={i}></Owes>
-              ))}
-          </ListGroup>
-        </Container>
+        <ExpensesForm clearExpenses={clearExpenses} group={group} setExpenses={setExpenses}/>
+        <ExpensesList total={total} expenses={expenses}/>
+        <OwesList owes={owes}/>
       </div>
-      <Container
-        className="d-flex justify-content-center align-items-center border shadow"
-        style={{ width: "max-content", maxWidth: "100%", paddingRight: "0" }}
-      >
-        <h4 className="mb-0" style={{ marginRight: "5px" }}>
-          Invite your friends with this Groupin: {group.password}
-        </h4>
-        <Button onClick={copyToClipBoard}>Copy</Button>
-      </Container>
+      <InviteButton group={group} copyToClipBoard={copyToClipBoard}/>
     </>
   );
 }
