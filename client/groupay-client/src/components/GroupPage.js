@@ -55,7 +55,7 @@ export default function GroupPage() {
       }
       // setTotals(newTotals);
       setTotal(newTotal);
-      splitPayments(newTotals);
+      setOwes(splitPayments(newTotals));
     }
   }, [expenses, groupWithUsers]);
 

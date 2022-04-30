@@ -33,5 +33,5 @@ export default function splitPayments(payments) {
       j--;
     }
   }
-  setOwes(owesArr);
+  return owesArr;
 }
