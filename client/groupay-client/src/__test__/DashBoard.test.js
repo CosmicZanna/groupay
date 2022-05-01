@@ -3,10 +3,11 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from "react-router-dom"
 import { AuthProvider } from '../context/AuthContext';
 import { act } from 'react-dom/test-utils';
-import JoinGroup from '../components/JoinGroup';
+import Dashboard from '../components/Dashboard';
 
 
-const MockJoinGroup = () => {
+
+const MockDashboard = () => {
   act(() => {
     <AuthProvider />
   });
@@ -14,43 +15,43 @@ const MockJoinGroup = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <JoinGroup />
+        <Dashboard />
       </AuthProvider>
     </BrowserRouter>
   );
 }
 
-describe('JoinGroup', () => {
+describe('Dashboard', () => {
 
   beforeAll(() => {
     jest.setTimeout(10000);
   });
 
   beforeEach(() => {
-    render(<MockJoinGroup />);
+    render(<MockDashboard />);
   });
 
-  it('should render the label', async () => {
+  it('should render the create group label', async () => {
+    const label = screen.getByLabelText(/create new group/i);
+    expect(label).toBeInTheDocument();
+  });
+  it('should render the join group label', async () => {
     const label = screen.getByLabelText(/join group/i);
     expect(label).toBeInTheDocument();
   });
 
+  it('should have the create group form', async () => {
+    const input = screen.getByPlaceholderText(/Enter group name/i);
+    expect(input).toBeInTheDocument();
+  });
   it('should have the enter group form', async () => {
     const input = screen.getByPlaceholderText(/Enter Groupin/i);
     expect(input).toBeInTheDocument();
   });
 
-  it('should have a button', async () => {
-    const button = screen.getByRole('button');
-    expect(button).toBeInTheDocument();
+  it('should have two buttons', async () => {
+    const button = screen.getAllByRole('button');
+    expect(button.length).toBe(3);
   });
-
-  // it('should update the value', async () => {
-  //   const input = screen.getByPlaceholderText(/Enter Groupin/i);
-  //   act(() => {
-  //     fireEvent.change(input, { target: { value: 'test' } });
-  //   });
-  //   expect(input.value).toBe('test');
-  // });
 
 });

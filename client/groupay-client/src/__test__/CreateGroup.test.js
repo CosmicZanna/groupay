@@ -3,10 +3,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from "react-router-dom"
 import { AuthProvider } from '../context/AuthContext';
 import { act } from 'react-dom/test-utils';
-import JoinGroup from '../components/JoinGroup';
+import CreateGroup from '../components/CreateGroup';
 
 
-const MockJoinGroup = () => {
+const MockCreateGroup = () => {
   act(() => {
     <AuthProvider />
   });
@@ -14,29 +14,29 @@ const MockJoinGroup = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <JoinGroup />
+        <CreateGroup />
       </AuthProvider>
     </BrowserRouter>
   );
 }
 
-describe('JoinGroup', () => {
+describe('CreateGroup', () => {
 
   beforeAll(() => {
     jest.setTimeout(10000);
   });
 
   beforeEach(() => {
-    render(<MockJoinGroup />);
+    render(<MockCreateGroup />);
   });
 
   it('should render the label', async () => {
-    const label = screen.getByLabelText(/join group/i);
+    const label = screen.getByLabelText(/create new group/i);
     expect(label).toBeInTheDocument();
   });
 
-  it('should have the enter group form', async () => {
-    const input = screen.getByPlaceholderText(/Enter Groupin/i);
+  it('should have the create group form', async () => {
+    const input = screen.getByPlaceholderText(/Enter group name/i);
     expect(input).toBeInTheDocument();
   });
 
