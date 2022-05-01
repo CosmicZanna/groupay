@@ -29,7 +29,6 @@ describe("NavBar", () => {
   })
 
   it('should render an img', async () => {
-    
     const imgLogo = screen.getByAltText(/GrouPay logo/i);
     expect(imgLogo).toBeInTheDocument()
   });
