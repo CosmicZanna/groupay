@@ -13,6 +13,7 @@ export function GroupCard({ handleGroupClick, group }) {
           <img className="" src={groupSvg} alt="users"></img>
           <p className="mb-0 ml-3" style={{ marginLeft: "5px" }}>{Math.floor(Math.random() * (5 - 2 + 1) + 2)}</p> {/* //mock data */}
         </Card.Header>
+        
         <Card.Body>
           <Card.Title className="mb-3">{group.groupName}</Card.Title>
           <Button onClick={() => handleGroupClick(group)}>

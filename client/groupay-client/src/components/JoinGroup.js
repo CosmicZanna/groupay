@@ -4,7 +4,7 @@ import apiServices from "../services/apiService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-export default function CreateGroup() {
+export default function JoinGroup() {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { currentUser, token } = useAuth();
