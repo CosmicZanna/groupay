@@ -16,8 +16,8 @@ export const groupsServiceCreateNewExpense = async (authId, userId, group, expen
 };
 
 export const groupsServiceCancelExpenses = async (authId, userId, group) => {
-  console.log(authId);
-  const cancelled = await axios.delete(url + "expenses", { headers: { Authorization: "Bearer " + authId }, data: { uid: userId, group: group } });
+  const headers = { headers: { Authorization: "Bearer " + authId }, data: { uid: userId, group: group } }
+  const cancelled = await axios.delete(url + "expenses", headers);
   return cancelled;
 };
 
@@ -32,3 +32,9 @@ export const groupsServiceGetExpenses = async (authId, userId, groupId) => {
   const groups = await axios.get(url + "expenses", headers);
   return groups.data;
 };
+
+export const groupsServiceDeleteGroup = async (authId, userId, groupId ) => {
+  const headers = { headers: { Authorization: "Bearer " + authId, uid: userId } };
+  const group = await axios.delete(url+ `groups/${groupId}`, headers);
+  return group;
+}

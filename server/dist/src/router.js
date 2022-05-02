@@ -13,6 +13,7 @@ router.post('/expenses', groups_controller_1.default.createExpense);
 router.post('/groups', groups_controller_1.default.createGroup);
 router.get('/group', groups_controller_1.default.getGroup);
 router.delete('/expenses', groups_controller_1.default.deleteExpense);
+router.delete('/groups/:id', groups_controller_1.default.deleteGroup);
 // users
 router.get('/groups', users_controller_1.default.getGroups);
 router.get('/user', users_controller_1.default.getUser);

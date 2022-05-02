@@ -10,6 +10,7 @@ router.post('/expenses', groupscontroller.createExpense);
 router.post('/groups', groupscontroller.createGroup);
 router.get('/group', groupscontroller.getGroup);
 router.delete('/expenses', groupscontroller.deleteExpense);
+router.delete('/groups/:id', groupscontroller.deleteGroup);
 
 // users
 router.get('/groups', userscontroller.getGroups);

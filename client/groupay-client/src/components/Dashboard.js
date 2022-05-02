@@ -17,6 +17,11 @@ export default function Dashboard() {
     navigate(`/group/${group.groupName}`, { state: { group: group } });
   }
 
+  async function handleDelete (groupId) {
+    const groupt = await apiServices.deleteGroup(token,currentUser.uid, groupId);
+    setgroupButtons(prev => prev.filter(g => g._id !== groupId));
+  }
+
   useEffect(() => {
     const fetchGroups = async () => {
       let groupResponse = await apiServices.getGroups(token, currentUser.uid);
@@ -45,6 +50,7 @@ export default function Dashboard() {
       <GroupList 
         groupButtons={groupButtons} 
         handleGroupClick={handleGroupClick}
+        handleDelete={handleDelete}
       />
     </div>
   );

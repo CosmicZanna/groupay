@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from "react-bootstrap";
 import { GroupCard } from "./GroupCard";
 
-export default function GroupList({ groupButtons, handleGroupClick }) {
+export default function GroupList({ groupButtons, handleGroupClick, handleDelete }) {
 
   return (
     <Container className="border mt-4 shadow">
@@ -12,6 +12,7 @@ export default function GroupList({ groupButtons, handleGroupClick }) {
             key={group._id} 
             group={group} 
             handleGroupClick={handleGroupClick} 
+            handleDelete={handleDelete}
           />
         ))}
       </Container>

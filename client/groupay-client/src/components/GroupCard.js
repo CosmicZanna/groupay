@@ -2,7 +2,10 @@ import React from 'react';
 import { Button, Card } from "react-bootstrap";
 import groupSvg from "../img/people-fill.svg";
 
-export function GroupCard({ handleGroupClick, group }) {
+export function GroupCard({ handleGroupClick, group, handleDelete }) {
+
+
+
   return (
     <div>
       <Card
@@ -18,6 +21,9 @@ export function GroupCard({ handleGroupClick, group }) {
           <Card.Title className="mb-3">{group.groupName}</Card.Title>
           <Button onClick={() => handleGroupClick(group)}>
             Go to group
+          </Button>
+          <Button className="mx-4" onClick={() => handleDelete(group._id)}>
+            Delete
           </Button>
         </Card.Body>
       </Card>

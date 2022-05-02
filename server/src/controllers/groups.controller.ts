@@ -22,18 +22,18 @@ async function createExpense(req: Request, res: Response) {
     res.status(400);
     res.send("not found");
     console.log("group not in user");
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
-    res.send("error");
+    res.status(500).send(err._message);
   }
 }
 async function deleteExpense(req: Request, res: Response) {
   try {
     const expense = await groups.deleteExpense(req.body.group);
     res.send(expense);
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
-    res.send("error");
+    res.status(500).send(err._message);
   }
 }
 
@@ -47,9 +47,9 @@ async function getExpenses(req: Request, res: Response) {
       }
     }
     res.send("group not found in user");
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
-    res.send("error");
+    res.status(500).send(err._message);
   }
 }
 async function createGroup(req: Request, res: Response) {
@@ -68,21 +68,32 @@ async function createGroup(req: Request, res: Response) {
       });
       res.send(group);
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
-    res.status(501);
-    res.send("501")
+    res.status(500).send(err._message);
   }
 }
 async function getGroup(req: Request, res: Response) {
   try {
     const group = await groups.getGroup(req.headers.password as string);
-      res.send(group);
-    }
-    catch (err) {
+    res.send(group);
+  } catch (err: any) {
     console.log(err);
-    res.send("501");
+    res.status(500).send(err._message);
   }
 }
 
-export default { createExpense, getExpenses, deleteExpense, createGroup, getGroup };
+async function deleteGroup(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const uid = req.headers.uid;
+    const group = await groups.getByIdAndDelete(id); 
+    await users.deleteGroup(uid as string, id);
+    res.send(group);
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).send(err._message);
+  }
+}
+
+export default { createExpense, getExpenses, deleteExpense, createGroup, getGroup, deleteGroup };

@@ -33,4 +33,12 @@ function findUser(uid) {
         return yield index_1.Users.findOne({ uid: uid });
     });
 }
-exports.default = { createUser, getGroups, findUser, addGroup };
+function deleteGroup(uid, groupId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = yield index_1.Users.findOne({ uid: uid });
+        user.groups = user.groups.filter((g) => g._id !== groupId);
+        yield user.save();
+        return user;
+    });
+}
+exports.default = { createUser, getGroups, findUser, addGroup, deleteGroup };

@@ -34,7 +34,7 @@ function createExpense(req, res) {
         }
         catch (err) {
             console.log(err);
-            res.send("error");
+            res.status(500).send(err._message);
         }
     });
 }
@@ -46,7 +46,7 @@ function deleteExpense(req, res) {
         }
         catch (err) {
             console.log(err);
-            res.send("error");
+            res.status(500).send(err._message);
         }
     });
 }
@@ -64,7 +64,7 @@ function getExpenses(req, res) {
         }
         catch (err) {
             console.log(err);
-            res.send("error");
+            res.status(500).send(err._message);
         }
     });
 }
@@ -88,8 +88,7 @@ function createGroup(req, res) {
         }
         catch (err) {
             console.log(err);
-            res.status(501);
-            res.send("501");
+            res.status(500).send(err._message);
         }
     });
 }
@@ -101,8 +100,23 @@ function getGroup(req, res) {
         }
         catch (err) {
             console.log(err);
-            res.send("501");
+            res.status(500).send(err._message);
         }
     });
 }
-exports.default = { createExpense, getExpenses, deleteExpense, createGroup, getGroup };
+function deleteGroup(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { id } = req.params;
+            const uid = req.headers.uid;
+            const group = yield groups_1.default.getByIdAndDelete(id);
+            yield users_1.default.deleteGroup(uid, id);
+            res.send(group);
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).send(err._message);
+        }
+    });
+}
+exports.default = { createExpense, getExpenses, deleteExpense, createGroup, getGroup, deleteGroup };

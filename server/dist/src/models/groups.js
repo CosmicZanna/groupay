@@ -41,4 +41,9 @@ function createGroup(group) {
         return yield index_1.Groups.create(group);
     });
 }
-exports.default = { addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup };
+function getByIdAndDelete(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield index_1.Groups.findByIdAndDelete(id);
+    });
+}
+exports.default = { addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup, getByIdAndDelete };

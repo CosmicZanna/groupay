@@ -24,4 +24,11 @@ async function findUser(uid: string){
   return await Users.findOne({uid: uid})
 }
 
-export default { createUser, getGroups, findUser, addGroup };
+async function deleteGroup(uid: string, groupId: string) {
+  const user = await Users.findOne({ uid: uid });
+  user.groups = user.groups.filter((g: Group) => g._id !== groupId);
+  await user.save();
+  return user;
+}
+
+export default { createUser, getGroups, findUser, addGroup, deleteGroup };

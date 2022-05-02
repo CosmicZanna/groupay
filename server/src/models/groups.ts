@@ -38,4 +38,8 @@ async function createGroup(group: Group){
   return await Groups.create(group);
 }
 
-export default { addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup };
+async function getByIdAndDelete(id: string) {
+  return await Groups.findByIdAndDelete(id);
+}
+
+export default { addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup, getByIdAndDelete };

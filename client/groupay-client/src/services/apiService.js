@@ -9,7 +9,8 @@ import {
   groupsServiceCreateNewExpense,
   groupsServiceGetExpenses,
   groupsServiceGetGroup,
-  groupsServiceCreateNewGroup
+  groupsServiceCreateNewGroup,
+  groupsServiceDeleteGroup
 } from './groupsService';
 
 // users services
@@ -24,6 +25,7 @@ const createNewExpense = groupsServiceCreateNewExpense;
 const cancelExpenses = groupsServiceCancelExpenses;
 const getGroup = groupsServiceGetGroup;
 const getExpenses = groupsServiceGetExpenses;
+const deleteGroup = groupsServiceDeleteGroup;
 
 const apiService = {
   register, 
@@ -35,6 +37,7 @@ const apiService = {
   getExpenses,
   joinGroup,
   cancelExpenses,
+  deleteGroup
 };
 
 export default apiService;
