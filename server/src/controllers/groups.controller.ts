@@ -1,8 +1,10 @@
-const groups = require("../models/groups");
-const users = require("../models/users");
-const ADLER32 = require("adler-32");
+import groups from "../models/groups";
+import users from "../models/users";
+import ADLER32 from "adler-32";
+import { Request, Response } from 'express';
+import { Group } from '../@types/types';
 
-async function createExpense(req, res) {
+async function createExpense(req: Request, res: Response) {
   try {
     const user = await users.findUser(req.body.uid);
     for (let userGroup of user.groups) {
@@ -25,7 +27,7 @@ async function createExpense(req, res) {
     res.send("error");
   }
 }
-async function deleteExpense(req, res) {
+async function deleteExpense(req: Request, res: Response) {
   try {
     const expense = await groups.deleteExpense(req.body.group);
     res.send(expense);
@@ -35,12 +37,12 @@ async function deleteExpense(req, res) {
   }
 }
 
-async function getExpenses(req, res) {
+async function getExpenses(req: Request, res: Response) {
   try {
-    const user = await users.findUser(req.headers.uid);
+    const user = await users.findUser(req.headers.uid as string);
     for (let group of user.groups) {
       if (group._id === req.headers.groupid) {
-        const groupExpenses = await groups.getExpenses(req.headers.groupid);
+        const groupExpenses = await groups.getExpenses(req.headers.groupid as string);
         return res.send(groupExpenses);
       }
     }
@@ -50,9 +52,9 @@ async function getExpenses(req, res) {
     res.send("error");
   }
 }
-async function createGroup(req, res) {
+async function createGroup(req: Request, res: Response) {
   try {
-    const newGroup = {
+    const newGroup: Group = {
       groupName: req.body.groupName,
       users: [req.body.uid],
       password: ADLER32.str(Date.now().toString()),
@@ -72,9 +74,9 @@ async function createGroup(req, res) {
     res.send("501")
   }
 }
-async function getGroup(req, res) {
+async function getGroup(req: Request, res: Response) {
   try {
-    const group = await groups.getGroup(req.headers.password);
+    const group = await groups.getGroup(req.headers.password as string);
       res.send(group);
     }
     catch (err) {
@@ -83,4 +85,4 @@ async function getGroup(req, res) {
   }
 }
 
-module.exports = { createExpense, getExpenses, deleteExpense, createGroup, getGroup };
+export default { createExpense, getExpenses, deleteExpense, createGroup, getGroup };

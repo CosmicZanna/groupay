@@ -1,6 +1,8 @@
-const router = require('express').Router();
-const groupscontroller = require('./controllers/groups.controller');
-const userscontroller  = require('./controllers/users.controller');
+import { Router } from 'express';
+import groupscontroller from './controllers/groups.controller';
+import userscontroller from './controllers/users.controller';
+
+const router = Router();
 
 // groups
 router.get('/expenses', groupscontroller.getExpenses);
@@ -15,4 +17,4 @@ router.get('/user', userscontroller.getUser);
 router.post('/register', userscontroller.createUser);
 router.put('/join', userscontroller.joinGroup);
 
-module.exports = router;
+export default router;

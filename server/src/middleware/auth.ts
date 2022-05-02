@@ -1,9 +1,10 @@
-const admin = require("../firebase.config")
+import admin from "../firebase.config";
+import { Request, Response, NextFunction } from 'express';
 
 class MiddleWare{
-    async decodeToken(req, res, next){
+    async decodeToken(req: Request, res: Response, next: NextFunction){
         try{
-            const token = req.headers.authorization.split(" ")[1];
+            const token = req.headers.authorization!.split(" ")[1];
             const decodeValue = await admin.auth().verifyIdToken(token)
             if(decodeValue){
             return next();
@@ -18,4 +19,4 @@ class MiddleWare{
     }
 }
 
-module.exports = new MiddleWare()
+export default new MiddleWare();

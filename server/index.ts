@@ -1,10 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const router = require('./router');
+import express from 'express';
+import cors from 'cors';
+import router from './src/router';
 const app = express();
-const middleware = require('./middleware/auth');
-const mongoose = require('mongoose');
-const { development } = require('./config');
+import middleware from './src/middleware/auth';
+import mongoose from 'mongoose';
+import { development } from './src/config';
 
 app.use(cors());
 app.use(middleware.decodeToken);
@@ -19,4 +19,4 @@ const PORT = development.port;
   app.listen(PORT, ()=> console.log(`running on port ${PORT}`));
 })()
 
-module.exports = app;
+export default app;

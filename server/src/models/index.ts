@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
+
 const GroupSchema = new mongoose.Schema({
   groupName: {
     type: String,
@@ -62,4 +63,4 @@ const UsersSchema = new mongoose.Schema({
 let Groups =  mongoose.model('groups', GroupSchema);
 let Users =  mongoose.model('users', UsersSchema);
 
-module.exports = {Groups, Users}
+export {Groups, Users}

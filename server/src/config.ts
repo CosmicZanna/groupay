@@ -6,4 +6,4 @@ const development = {
   database: process.env.DB || 'groupay',
 };
 
-module.exports = { development };
+export { development };

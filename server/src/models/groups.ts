@@ -1,15 +1,16 @@
-const {Groups} = require('./index')
+import { Expense, Group, User } from '../@types/types';
+import { Groups } from './index';
 
-async function getExpenses(id){
+async function getExpenses(id: string){
   const gotGroup = await Groups.findOne({_id : id});
   return gotGroup.expenses;
 }
 
-async function getGroup(password){
+async function getGroup(password: string){
   return await Groups.findOne({password :password});
 }
 
-async function addUser(id, user){
+async function addUser(id: number, user: User){
   return await Groups.findOneAndUpdate(
     { _id: id }, 
     { $push: { users: user } }, 
@@ -17,7 +18,7 @@ async function addUser(id, user){
   );
 }
 
-async function createExpense(id, expense){
+async function createExpense(id: number, expense: Expense){
   return await Groups.findOneAndUpdate(
     { _id: id }, 
     { $push: { expenses: expense } }, 
@@ -25,7 +26,7 @@ async function createExpense(id, expense){
   );
 }
 
-async function deleteExpense(id){
+async function deleteExpense(id: number){
   return await Groups.findOneAndUpdate(
     { _id: id }, 
     { expenses: [] }, 
@@ -33,8 +34,8 @@ async function deleteExpense(id){
   );
 }
 
-async function createGroup(group){
+async function createGroup(group: Group){
   return await Groups.create(group);
 }
 
-module.exports = { addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup };
+export default { addUser, getExpenses, createExpense, deleteExpense, createGroup, getGroup };

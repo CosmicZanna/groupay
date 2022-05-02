@@ -1,24 +1,25 @@
-const users = require("../models/users");
-const groupsModel = require("../models/groups");
+import users from "../models/users";
+import groupsModel from "../models/groups";
+import { Request, Response } from 'express';
 
-async function createUser(req, res) {
+async function createUser(req: Request, res: Response) {
   try {
     const user = await users.createUser(req.body.uid, req.body.name);
     res.send(user);
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
   }
 }
-async function getGroups(req, res) {
+async function getGroups(req: Request, res: Response) {
   try {
-    const groups = await users.getGroups(req.headers.uid);
+    const groups = await users.getGroups(req.headers.uid as string);
     res.send(groups);
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
     res.status(400).send(err._message);
   }
 }
-async function joinGroup(req, res) {
+async function joinGroup(req: Request, res: Response) {
   try {
     let group = await groupsModel.getGroup(req.body.password);
     if (group) {
@@ -38,20 +39,20 @@ async function joinGroup(req, res) {
       res.status(400);
       res.send("can't find group");
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
     res.status(400).send(err._message);
   }
 }
 
-async function getUser(req, res) {
+async function getUser(req: Request, res: Response) {
   try {
-    const user = await users.findUser(req.headers.uid);
+    const user = await users.findUser(req.headers.uid as string);
     res.send(user);
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
     res.send("400");
   }
 }
 
-module.exports = { createUser, getGroups, joinGroup, getUser };
+export default { createUser, getGroups, joinGroup, getUser };
