@@ -30,6 +30,7 @@ describe('GroupCard', () => {
   });
 
   beforeEach(() => {
+    // eslint-disable-next-line testing-library/no-render-in-setup
     render(<MockGroupCard group={mockGroup} />);
   });
 

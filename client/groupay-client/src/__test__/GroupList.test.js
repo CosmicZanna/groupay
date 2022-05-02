@@ -36,6 +36,7 @@ describe('GroupList', () => {
   });
 
   beforeEach(() => {
+    // eslint-disable-next-line testing-library/no-render-in-setup
     render(<MockGroupList groupButtons={mockGroups} />);
   });
 

@@ -25,6 +25,7 @@ describe("NavBar", () => {
   });
 
   beforeEach(() => {
+    // eslint-disable-next-line testing-library/no-render-in-setup
     render(<MockNavBar />);
   })
 
