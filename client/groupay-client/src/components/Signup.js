@@ -21,8 +21,11 @@ export default function Signup() {
         try {
             setLoading(true)
             const user = await signup(emailRef.current.value, passwordRef.current.value);
-            await apiServices.register(token, user.user.uid, nameRef.current.value);
-            navigate('/');
+            if (token) {
+                await apiServices.register(token, user.user.uid, nameRef.current.value);
+                console.log('tokeeeen', token)
+                navigate('/');
+            }
         } catch (err) {
             console.log(err)
         }
