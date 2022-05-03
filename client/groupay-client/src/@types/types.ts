@@ -23,3 +23,9 @@ export type User = {
   groups?: Group[],
   _id?: string
 }
+
+
+export type Payment = {
+  [key: string]: number
+}
+

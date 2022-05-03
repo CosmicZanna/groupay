@@ -1,4 +1,6 @@
-export default function splitPayments(payments) {
+import { Payment } from "../@types/types"
+
+export default function splitPayments(payments: Payment) {
   const people = Object.keys(payments);
   const valuesPaid = Object.values(payments);
 
