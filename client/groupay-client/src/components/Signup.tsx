@@ -3,26 +3,27 @@ import { Container, Form, Button, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import apiServices from '../services/apiService'
+import firebase from 'firebase/compat';
 
 export default function Signup() {
-    const emailRef = useRef();
-    const nameRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
+    const emailRef = useRef<HTMLInputElement>(null);
+    const nameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const passwordConfirmRef = useRef<HTMLInputElement>(null);
     const { signup, token } = useAuth();
-    const [loading, setLoading] = useState()
-    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: any) {
         e.preventDefault();
-        if (passwordConfirmRef.current.value !== passwordRef.current.value) {
+        if (passwordConfirmRef.current!.value !== passwordRef.current!.value) {
             console.log('password dont match'); return
         }
         try {
             setLoading(true)
-            const user = await signup(emailRef.current.value, passwordRef.current.value);
+            const user = await signup(emailRef.current!.value, passwordRef.current!.value);
             if (token) {
-                await apiServices.register(token, user.user.uid, nameRef.current.value);
+                await apiServices.register(token, user.user!.uid, nameRef.current!.value);
                 console.log('tokeeeen', token)
                 navigate('/');
             }

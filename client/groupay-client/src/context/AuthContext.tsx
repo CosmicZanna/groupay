@@ -2,20 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import app from "../firebase";
 import firebase from "firebase/compat"
 
-
 const auth = app.auth();
 
 type Context = {
   currentUser?: firebase.User,
-  signup: (email: string, password: string) => Promise<firebase.auth.UserCredential> | void,
+  signup: (email: string, password: string) => Promise<firebase.auth.UserCredential>,
   login: (email: string, password: string) => Promise<firebase.auth.UserCredential>  | void,
   logout: () =>  Promise<void>,
   token: string | undefined
  }
 
 const contextDefault: Context = {
-  signup: (email: string, password: string) => {},
-  login: (email: string, password: string) => {},
+  signup: (email: string, password: string) => new Promise(() => {} ),
+  login: (email: string, password: string) => new Promise(() => { }),
   logout: () => {
     return new Promise(()=>{})
   },
