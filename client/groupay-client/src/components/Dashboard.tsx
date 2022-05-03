@@ -7,25 +7,26 @@ import CreateGroup from "./CreateGroup";
 import JoinGroup from "./JoinGroup";
 import { NavBar } from "./NavBar";
 import GroupList from "./GroupList";
+import { Group } from "../@types/types";
 
 export default function Dashboard() {
-  const [groupButtons, setgroupButtons] = useState([]);
+  const [groupButtons, setgroupButtons] = useState<Group[]>([]);
   const { currentUser, token } = useAuth();
   const navigate = useNavigate();
 
-  async function handleGroupClick(group) {
+  async function handleGroupClick(group: Group) {
     navigate(`/group/${group.groupName}`, { state: { group: group } });
   }
 
-  async function handleDelete (groupId) {
-    const groupt = await apiServices.deleteGroup(token,currentUser.uid, groupId);
-    setgroupButtons(prev => prev.filter(g => g._id !== groupId));
+  async function handleDelete (groupId: string) {
+    const groupt = await apiServices.deleteGroup(token!, currentUser!.uid, groupId);
+    setgroupButtons(prev => prev.filter((g: Group) => g._id !== groupId));
   }
 
   useEffect(() => {
     const fetchGroups = async () => {
-      let groupResponse = await apiServices.getGroups(token, currentUser.uid);
-      let groupList = [];
+      let groupResponse = await apiServices.getGroups(token!, currentUser!.uid);
+      let groupList: Group[] = [];
       if (Array.isArray(groupResponse)) groupList = [...groupResponse];
       setgroupButtons(groupList);
     };

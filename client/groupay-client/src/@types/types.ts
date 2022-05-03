@@ -29,3 +29,8 @@ export type Payment = {
   [key: string]: number
 }
 
+export type inputValue = {
+  target: { 
+    value: string 
+  }
+}

@@ -13,7 +13,7 @@ function AppNavigation () {
 
   const appNotLogged = (
     <>
-      <Route exact path='/' element={<Navigate to='/login' />} />
+      <Route path='/' element={<Navigate to='/login' />} />
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<Signup />}/>
     </>
@@ -21,7 +21,7 @@ function AppNavigation () {
 
   const appLogged = (
     <>
-      <Route exact path='/' element={<Dashboard />} />
+      <Route path='/' element={<Dashboard />} />
       <Route path='/login' element={<Navigate to='/'/>} />
       <Route path='/signup' element={<Navigate to='/' />} />
       <Route path="/group/:groupName" element={<GroupPage />} />

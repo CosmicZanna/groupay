@@ -1,8 +1,15 @@
 import React from 'react';
 import { Container } from "react-bootstrap";
+import { Group } from '../@types/types';
 import { GroupCard } from "./GroupCard";
 
-export default function GroupList({ groupButtons, handleGroupClick, handleDelete }) {
+type GroupListProps = {
+  groupButtons: Group[], 
+  handleGroupClick: (group: Group) => void, 
+  handleDelete: (groupId: string) => void
+}
+
+export default function GroupList({ groupButtons, handleGroupClick, handleDelete }: GroupListProps) {
 
   return (
     <Container className="border mt-4 shadow">
