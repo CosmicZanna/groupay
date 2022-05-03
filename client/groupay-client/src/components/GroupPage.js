@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation} from "react-router-dom";
 import apiServices from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
-import {
-  Button,
-  Container,
-} from "react-bootstrap";
 import { NavBar } from "./NavBar";
 
 import splitPayments from "../services/paymentService"

@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-render-in-setup */
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from "react-router-dom"
@@ -49,7 +50,7 @@ describe('Dashboard', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('should have two buttons', async () => {
+  it('should have three buttons', async () => {
     const button = screen.getAllByRole('button');
     expect(button.length).toBe(3);
   });

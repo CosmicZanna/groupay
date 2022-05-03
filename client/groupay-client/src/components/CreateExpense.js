@@ -72,7 +72,7 @@ export default function CreateExpense({ group, setExpenses }) {
                 step="0.01"
               />
             </Form.Group>
-            <Dropdown className="mb-3">
+            <Dropdown className="mb-3" role="dropdown">
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {curr}
               </Dropdown.Toggle>
@@ -82,7 +82,7 @@ export default function CreateExpense({ group, setExpenses }) {
                 <Dropdown.Item onClick={()=>setCurr('USD')}>USD</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <Dropdown className="mb-3">
+            <Dropdown className="mb-3" role="dropdown">
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                  {tag}
               </Dropdown.Toggle>
@@ -96,7 +96,7 @@ export default function CreateExpense({ group, setExpenses }) {
               </Dropdown.Menu>
             </Dropdown>
            
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" id="submit_button">
               Submit
             </Button>
           </Form>

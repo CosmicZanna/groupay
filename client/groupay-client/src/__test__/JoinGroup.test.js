@@ -27,6 +27,7 @@ describe('JoinGroup', () => {
   });
 
   beforeEach(() => {
+    // eslint-disable-next-line testing-library/no-render-in-setup
     render(<MockJoinGroup />);
   });
 
