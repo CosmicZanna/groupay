@@ -2,14 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Dropdown } from "react-bootstrap";
 import apiServices from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
+import { Expense, Group } from "../@types/types"
 
-export default function CreateExpense({ group, setExpenses }) {
+type CreateExpenseProp ={ 
+  group: Group,
+  setExpenses: () => void
+}
+
+export default function CreateExpense({ group, setExpenses }: CreateExpenseProp) {
   const [curr, setCurr] = useState('Currency')
   const [tag, setTag] = useState('🏷️ Tag')
   const [activeUser, setActiveUser] = useState({})
-  const titleRef = useRef();
-  const valueRef = useRef();
-  const currRef = useRef();
+  const titleRef = useRef<HTMLInputElement>();
+  const valueRef = useRef<HTMLInputElement>();
+  const currRef = useRef<HTMLInputElement>  ();
   ///const imgRef = useRef(); NOT MVP
   const { currentUser, token } = useAuth();
 
@@ -18,14 +24,14 @@ export default function CreateExpense({ group, setExpenses }) {
     if(currentUser){
       console.log('currentUser exists');
     apiServices
-        .getUser(token, currentUser.uid)
+        .getUser(token!, currentUser.uid)
         .then((user) => {setActiveUser(user)});}
   }, [token, currentUser]);
   
-  async function createExpense(e) {
+  async function createExpense(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     console.log(activeUser, 'activeUser');
-    if (titleRef.current.value.length > 1 && valueRef.current.value > 0) {
+    if (titleRef.current!.value.length > 1 && valueRef.current!.value > 0) {
       try {
         const newExpense = {
           title: titleRef.current.value,

@@ -1,7 +1,14 @@
 import React from 'react'
 import {Container, Button} from 'react-bootstrap'
+import { Group } from '../@types/types'
 
-export default function InviteButton({group, copyToClipBoard}) {
+type InviteButtonProps = {
+  group: Group,
+  copyToClipBoard: () => void
+}
+
+
+export default function InviteButton({group, copyToClipBoard}: InviteButtonProps) {
   return (
     <Container
         className="d-flex justify-content-center align-items-center border shadow"

@@ -1,13 +1,19 @@
 import React from 'react'
 import {Container, ListGroup} from 'react-bootstrap'
-import Expense from './Expense'
+import { Expense } from '../@types/types';
+import ExpenseComponent from './Expense'
 
-export default function ExpensesList({expenses, total}) {
+type ExpensesListProp = {
+  expenses: [Expense],
+  total: number
+}
+
+export default function ExpensesList({expenses, total}: ExpensesListProp) {
   return (
     <Container
           className="m-5 border p-0 shadow"
           style={{
-            Width: "100%",
+            width: "100%",
             minWidth: "35rem",
             maxHeight: "550px",
             overflow: "scroll s",
@@ -20,8 +26,8 @@ export default function ExpensesList({expenses, total}) {
           }
           <ListGroup className="shadow-sm">
             {expenses.length > 0 &&
-              expenses.map((expense, i) => (
-                <Expense expense={expense} key={i}></Expense>
+              expenses.map((expense: Expense, i: number) => (
+                <ExpenseComponent expense={expense} key={i}></ExpenseComponent>
               ))}
           </ListGroup>
         </Container>

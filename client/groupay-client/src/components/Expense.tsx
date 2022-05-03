@@ -1,7 +1,12 @@
 import React from 'react'
 import {ListGroup} from "react-bootstrap";
+import { Expense } from '../@types/types';
 
-export default function Expense({expense}) {
+type ExpenseProps = {
+  expense: Expense
+}
+
+export default function ExpenseComponent({expense}: ExpenseProps) {
   return (
     <ListGroup.Item
                   
