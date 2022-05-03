@@ -50,7 +50,7 @@ describe('Dashboard', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('should have two buttons', async () => {
+  it('should have three buttons', async () => {
     const button = screen.getAllByRole('button');
     expect(button.length).toBe(3);
   });
