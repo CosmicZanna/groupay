@@ -1,6 +1,6 @@
 export type Expense = {
   title: string,
-  pictureUrl: string,
+  pictureUrl?: string,
   value: number,
   currency: string
   tag: string
@@ -32,5 +32,11 @@ export type Payment = {
 export type inputValue = {
   target: { 
     value: string 
+  }
+}
+
+export type LocationObj = {
+  state: {
+    group: Group
   }
 }

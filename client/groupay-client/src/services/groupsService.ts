@@ -1,6 +1,6 @@
 import axios from "axios";
-const url = "http://localhost:3001/";
 import {Group, Expense} from "../@types/types"
+const url = "http://localhost:3001/";
 
 export const groupsServiceCreateNewGroup = async (authId: string, userId: string, groupName: string) => {
   const body = { uid: userId, groupName: groupName };
@@ -9,8 +9,8 @@ export const groupsServiceCreateNewGroup = async (authId: string, userId: string
   return createdGroup;
 };
 
-export const groupsServiceCreateNewExpense = async (authId: string, userId: string, group: Group, expense: Expense) => {
-  const body = { uid: userId, group: group, expense: expense };
+export const groupsServiceCreateNewExpense = async (authId: string, userId: string, groupId: string, expense: Expense) => {
+  const body = { uid: userId, group: groupId, expense: expense };
   const headers = { headers: { Authorization: "Bearer " + authId } };
   const createdExpense = await axios.post(url + "expenses", body, headers);
   return createdExpense;
@@ -22,8 +22,8 @@ export const groupsServiceCancelExpenses = async (authId: string, userId: string
   return cancelled;
 };
 
-export const groupsServiceGetGroup = async (authId: string, userId: string, password: number) => {
-  const headers = { headers: { Authorization: "Bearer " + authId, uid: userId, password: password } };
+export const groupsServiceGetGroup = async (authId: string, password: number) => {
+  const headers = { headers: { Authorization: "Bearer " + authId, password: password } };
   const group = await axios.get(url + "group", headers);
   return group.data;
 };

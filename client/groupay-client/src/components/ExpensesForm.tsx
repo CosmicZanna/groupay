@@ -1,12 +1,12 @@
 import React from 'react'
 import {Container, Button} from 'react-bootstrap'
 import CreateExpense from "./CreateExpense";
-import { Group } from "../@types/types"
+import { Expense, Group } from "../@types/types"
 
 type ExpenseFormProp ={ 
   group: Group,
-  setExpenses: () => void,
-  clearExpenses: () => void,
+  setExpenses: (newExpense: Expense) => void,
+  clearExpenses: (e: any) => void,
 }
 
 export default function ExpensesForm({group, setExpenses, clearExpenses}: ExpenseFormProp) {

@@ -3,7 +3,7 @@ import {Container, ListGroup} from 'react-bootstrap'
 import Owes from './Owes'
 
 type OwesListProps = {
-  owes: [string]
+  owes: string[]
 }
 
 export default function OwesList({owes}: OwesListProps) {

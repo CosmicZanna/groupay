@@ -7,7 +7,7 @@ import CreateGroup from "./CreateGroup";
 import JoinGroup from "./JoinGroup";
 import { NavBar } from "./NavBar";
 import GroupList from "./GroupList";
-import { Group } from "../@types/types";
+import { Group, LocationObj } from "../@types/types";
 
 export default function Dashboard() {
   const [groupButtons, setgroupButtons] = useState<Group[]>([]);

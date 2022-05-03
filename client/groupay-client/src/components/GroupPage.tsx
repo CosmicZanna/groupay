@@ -9,15 +9,18 @@ import ExpensesForm from './ExpensesForm';
 import ExpensesList from './ExpensesList';
 import OwesList from './OwesList';
 import InviteButton from './InviteButton';
+import { Expense, Group, Payment } from "../@types/types";
 
 export default function GroupPage() {
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const [total, setTotal] = useState(0);
   // const [totals, setTotals] = useState({});
-  const [owes, setOwes] = useState([]);
-  const [groupWithUsers, setgroupWithUsers] = useState({});
+  const [owes, setOwes] = useState<string[]>([]);
+  const [groupWithUsers, setgroupWithUsers] = useState<Group>();
   const { currentUser, token} = useAuth();
-  const { state } = useLocation();
+
+
+  const { state }: any = useLocation();
   const group = state.group;
 
   
@@ -25,12 +28,12 @@ export default function GroupPage() {
   useEffect(() => {
     try {
       apiServices
-        .getExpenses(token, currentUser.uid, group._id)
+        .getExpenses(token!, currentUser!.uid, group._id)
         .then((newExpenses) => {
           setExpenses([...newExpenses]);
         });
       apiServices
-        .getGroup(token, currentUser, group.password)
+        .getGroup(token!, group.password)
         .then((newGroup) => setgroupWithUsers(newGroup));
     } catch (error) {
       console.log(error);
@@ -38,10 +41,10 @@ export default function GroupPage() {
   }, [currentUser]);
 
   useEffect(() => {
-    if (expenses.length > 0 && groupWithUsers.users.length > 0) {
+    if (expenses.length > 0 && groupWithUsers!.users!.length > 0) {
       let newTotal = 0;
       // let othersExpenses = 0;
-      let newTotals = {};
+      let newTotals: Payment = {};
       for (let expense of expenses) {
         newTotal += expense.value;
         if (newTotals[expense.payerName])
@@ -58,12 +61,12 @@ export default function GroupPage() {
   }, [expenses, groupWithUsers]);
 
 
-  async function clearExpenses(e) {
+  async function clearExpenses(e: any) {
     e.preventDefault();
     try {
       await apiServices.cancelExpenses(
-        token,
-        currentUser.uid,
+        token!,
+        currentUser!.uid,
         group._id);
       setExpenses([]);
     } catch (e) {}
@@ -73,11 +76,14 @@ export default function GroupPage() {
     navigator.clipboard.writeText(group.password);
   }
 
+  function expensesHelper (newExpense: Expense) {
+    setExpenses([...expenses, newExpense])
+  }
   return (
     <>
       <NavBar/>
       <div className="d-flex">
-        <ExpensesForm clearExpenses={clearExpenses} group={group} setExpenses={setExpenses}/>
+        <ExpensesForm clearExpenses={clearExpenses} group={group} setExpenses={expensesHelper}/>
         <ExpensesList total={total} expenses={expenses}/>
         <OwesList owes={owes}/>
       </div>

@@ -2,20 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Dropdown } from "react-bootstrap";
 import apiServices from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
-import { Expense, Group } from "../@types/types"
+import { User, Group, Expense } from "../@types/types"
 
 type CreateExpenseProp ={ 
   group: Group,
-  setExpenses: () => void
+  setExpenses: (expenses: Expense) => void
 }
+
 
 export default function CreateExpense({ group, setExpenses }: CreateExpenseProp) {
   const [curr, setCurr] = useState('Currency')
   const [tag, setTag] = useState('🏷️ Tag')
-  const [activeUser, setActiveUser] = useState({})
-  const titleRef = useRef<HTMLInputElement>();
-  const valueRef = useRef<HTMLInputElement>();
-  const currRef = useRef<HTMLInputElement>  ();
+  const [activeUser, setActiveUser] = useState<User>()
+  const titleRef = useRef<HTMLInputElement>(null);
+  const valueRef = useRef<HTMLInputElement>(null);
+  const currRef = useRef<HTMLInputElement>(null);
   ///const imgRef = useRef(); NOT MVP
   const { currentUser, token } = useAuth();
 
@@ -28,27 +29,27 @@ export default function CreateExpense({ group, setExpenses }: CreateExpenseProp)
         .then((user) => {setActiveUser(user)});}
   }, [token, currentUser]);
   
-  async function createExpense(e: React.ChangeEvent<HTMLInputElement>) {
+  async function createExpense(e: any) {
     e.preventDefault();
     console.log(activeUser, 'activeUser');
-    if (titleRef.current!.value.length > 1 && valueRef.current!.value > 0) {
+    if (titleRef.current!.value.length > 1 && Number(valueRef.current!.value) > 0) {
       try {
-        const newExpense = {
-          title: titleRef.current.value,
-          value: Number(valueRef.current.value),
-          curr: curr, 
+        const newExpense: Expense = {
+          title: titleRef.current!.value,
+          value: Number(valueRef.current!.value),
+          currency: curr, 
           tag: tag,
-          payer: currentUser.uid,
-          payerName: activeUser.name
+          payer: currentUser!.uid,
+          payerName: activeUser!.name
         }
         await apiServices.createNewExpense(
-          token,
-          currentUser.uid,
-          group._id, 
+          token!,
+          currentUser!.uid,
+          group!._id!, 
           newExpense
         );
         console.log(newExpense, '<- new expense');
-        setExpenses((oldExpenses => [...oldExpenses, newExpense]))
+        setExpenses(newExpense)
       } catch (error) {
         console.log(error);
       }

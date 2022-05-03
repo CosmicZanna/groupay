@@ -4,7 +4,7 @@ import { Expense } from '../@types/types';
 import ExpenseComponent from './Expense'
 
 type ExpensesListProp = {
-  expenses: [Expense],
+  expenses: Expense[],
   total: number
 }
 
