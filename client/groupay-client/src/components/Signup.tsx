@@ -21,11 +21,16 @@ export default function Signup() {
         }
         try {
             setLoading(true)
-            const user = await signup(emailRef.current!.value, passwordRef.current!.value);
-            if (token) {
-                await apiServices.register(token, user.user!.uid, nameRef.current!.value);
-                console.log('tokeeeen', token)
-                navigate('/');
+            const user: any = await signup(emailRef.current!.value, passwordRef.current!.value);
+            const tokenFromUser = user.user.getIdToken();
+            if (tokenFromUser) {
+                tokenFromUser.then( async (t: string) => {
+                    await apiServices.register(t, user.user!.uid, nameRef.current!.value);
+                    console.log('tokeeeen', t)
+                    navigate('/');
+                })
+            } else {
+                console.log('No token in time')
             }
         } catch (err) {
             console.log(err)
