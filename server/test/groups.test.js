@@ -1,6 +1,5 @@
 const { expect } = require('chai');
-const should = require('chai').should();
-const Groups = require('../models/groups');
+const Groups = require('../dist/src/models/groups').default;
 const ADLER32 = require("adler-32");
 const { mockGroup, mockExpense } = require('./mock');
 
@@ -12,6 +11,7 @@ describe('-------Group Model--------', function () {
     const password_2 = ADLER32.str(Date.now().toString());
     
     it("should create the group", async function () {
+
       const group = await Groups.createGroup({ ...mockGroup, password: password_1 });
       group.isNew.should.be.false;
     });
@@ -104,6 +104,16 @@ describe('-------Group Model--------', function () {
       const newGroup = await Groups.createExpense(group._id, mockExpense);
       const expenses = await Groups.deleteExpense(newGroup._id);
       expect(expenses.expenses).to.be.empty;
+    });
+  });
+
+  describe('getByIdAndDelete', function () {
+
+    it('should delete the group', async function () {
+      const group = await Groups.createGroup(mockGroup);
+      expect(await Groups.getGroup(group.password) !== null).to.be.true
+      await Groups.getByIdAndDelete(group._id);
+      expect(await Groups.getGroup(group.password) === null).to.be.true
     });
   });
 

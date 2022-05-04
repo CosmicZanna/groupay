@@ -2,9 +2,9 @@ const { signup } = require('./auth.test');
 const { deleteUser } = require("firebase/auth");
 const { expect } = require('chai');
 const request = require('supertest');
-const app = require('../index');
-const Group = require('../models/groups');
-const Users = require('../models/users');
+const app = require('../dist/index').default;
+const Group = require('../dist/src/models/groups').default;
+const Users = require('../dist/src/models/users').default;
 const { group, mockGroup } = require('./mock');
 
 describe('-------Users Controller-------', function () {

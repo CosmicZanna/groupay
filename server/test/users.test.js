@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const Users = require('../models/users');
+const Users = require('../dist/src/models/users').default;
 const { group } = require('./mock');
 
 describe('--------User Model---------', function () {
@@ -59,11 +59,23 @@ describe('--------User Model---------', function () {
     })
 
     it("should return the group array ", async function () {
-      const user = await Users.findUser("testuid")
+      const user = await Users.findUser("testuid");
       const groups = await Users.getGroups("testuid");
       expect(user.groups).to.eql(groups);
     });
+  });
 
+  describe('deleteGroup', function () {
+    beforeEach(async () => {
+      await Users.createUser("testuid", "foo")
+      await Users.addGroup("testuid", group);
+    });
+
+    it('should remove the group from the user groups', async function () {
+      const user = await Users.findUser("testuid");
+      const updatedUser = await Users.deleteGroup(user.uid, group._id);
+      expect(updatedUser.groups.map(g => g._id)).to.not.include(group._id);
+    });
   });
 });
 
