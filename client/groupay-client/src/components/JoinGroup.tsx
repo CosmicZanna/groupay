@@ -47,7 +47,7 @@ export default function JoinGroup() {
                 value={value}
               />
             </Form.Group>
-            <Button disabled={value.length < 2} variant="primary" type="submit">
+            <Button id="submit-join" disabled={value.length < 2} variant="primary" type="submit">
               Submit
             </Button>
           </Form>
