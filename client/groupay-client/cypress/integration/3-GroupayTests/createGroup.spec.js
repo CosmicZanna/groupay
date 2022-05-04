@@ -4,7 +4,7 @@ import { signIn } from "../utils/signInUtils";
 context('DashBoard', function () {
 
   it('should login and redirect to dashboard', function () {
-    signIn('cypress@testing4.com', 'password');
+    signIn('cypress@testing1.com', 'password');
 
     const createLabel = cy.get(':nth-child(1) > .shadow > .card-body > form > .mb-3 > .form-label')
     createLabel.should('have.text', 'Create new group');
