@@ -23,7 +23,6 @@ export default function CreateExpense({ group, setExpenses }: CreateExpenseProp)
 
   useEffect(() => {
     if(currentUser){
-      console.log('currentUser exists');
     apiServices
         .getUser(token!, currentUser.uid)
         .then((user) => {setActiveUser(user)});}
