@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --timeout 10000 --exit",
     "build": "tsc -p tsconfig.json",
-    "start": "nodemon dist/index.js"
+    "start": "npm run build && nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
