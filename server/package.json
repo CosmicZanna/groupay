@@ -6,8 +6,11 @@
   "scripts": {
     "test": "mocha --timeout 10000 --exit",
     "build": "tsc -p tsconfig.json",
-    "start": "npm run build && nodemon dist/index.js"
-  },
+    "start": "npm run build && nodemon dist/index.js",
+    "start:test": "set APP_ENV=test&& npm run build && nodemon dist/index.js",
+    "start:mac_test": "APP_ENV=test npm run build && nodemon dist/index.js"
+
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",
