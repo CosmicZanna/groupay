@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useLocation} from "react-router-dom";
 import apiServices from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
-import { NavBar } from "./NavBar";
+import { NavBar } from "../components/NavBar";
 
 import splitPayments from "../services/paymentService"
-import ExpensesForm from './ExpensesForm';
-import ExpensesList from './ExpensesList';
-import OwesList from './OwesList';
-import InviteButton from './InviteButton';
+import ExpensesForm from '../components/ExpensesForm';
+import ExpensesList from '../components/ExpensesList';
+import OwesList from '../components/OwesList';
+import InviteButton from '../components/InviteButton';
 import { Expense, Group, Payment } from "../@types/types";
 
 export default function GroupPage() {

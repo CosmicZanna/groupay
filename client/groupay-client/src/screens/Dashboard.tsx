@@ -3,11 +3,11 @@ import { Container } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import apiServices from "../services/apiService";
-import CreateGroup from "./CreateGroup";
-import JoinGroup from "./JoinGroup";
-import { NavBar } from "./NavBar";
-import GroupList from "./GroupList";
-import { Group, LocationObj } from "../@types/types";
+import CreateGroup from "../components/CreateGroup";
+import JoinGroup from "../components/JoinGroup";
+import { NavBar } from "../components/NavBar";
+import GroupList from "../components/GroupList";
+import { Group } from "../@types/types";
 
 export default function Dashboard() {
   const [groupButtons, setgroupButtons] = useState<Group[]>([]);

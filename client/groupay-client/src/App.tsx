@@ -1,11 +1,11 @@
 import React from 'react';
-import { AuthProvider } from '../context/AuthContext';
-import Signup from './Signup';
-import Login from './Login';
-import Dashboard from './Dashboard';
+import { AuthProvider } from './context/AuthContext';
+import Signup from './screens/Signup';
+import Login from './screens/Login';
+import Dashboard from './screens/Dashboard';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import GroupPage from './GroupPage';
-import { useAuth } from '../context/AuthContext';
+import GroupPage from './screens/GroupPage';
+import { useAuth } from './context/AuthContext';
 import { Navigate } from 'react-router-dom'
 
 function AppNavigation () {
