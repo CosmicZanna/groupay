@@ -7,7 +7,7 @@ const Group = require('../dist/src/models/groups').default;
 const User = require('../dist/src/models/users').default;
 const { mockGroup, mockExpense } = require('./mock');
 
-describe.only('-------Groups Controller-------', function () {
+describe('-------Groups Controller-------', function () {
 
 
   let userAuth;
