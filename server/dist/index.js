@@ -31,15 +31,13 @@ const PORT = config_1.development.port;
         app.listen(PORT, () => console.log(`running on port ${PORT}`));
     });
 })();
-mongoose_1.default.connection.once('open', function () {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log(config_1.development);
-        if (config_1.development.database === 'groupay_test') {
-            yield mongoose_1.default.connection.collections.users.drop();
-            yield mongoose_1.default.connection.collections.groups.drop();
-        }
-    });
+/* mongoose.connection.once('open', async function () {
+  console.log(development)
+  if(development.database === 'groupay_test'){
+    await mongoose.connection.collections.users.drop();
+    await mongoose.connection.collections.groups.drop();
+  }
 }).on('error', function (error) {
-    console.log('TestDB connection error', error);
-});
+  console.log('TestDB connection error', error);
+}); */
 exports.default = app;

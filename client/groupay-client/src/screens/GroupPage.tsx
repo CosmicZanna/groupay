@@ -3,7 +3,7 @@ import { useLocation} from "react-router-dom";
 import apiServices from "../services/apiService";
 import { useAuth } from "../context/AuthContext";
 import { NavBar } from "../components/NavBar";
-
+import {Container} from "react-bootstrap"
 import splitPayments from "../services/paymentService"
 import ExpensesForm from '../components/ExpensesForm';
 import ExpensesList from '../components/ExpensesList';
@@ -69,6 +69,7 @@ export default function GroupPage() {
         currentUser!.uid,
         group._id);
       setExpenses([]);
+      setTotal(0);
     } catch (e) {}
   }
 
@@ -80,7 +81,7 @@ export default function GroupPage() {
     setExpenses([...expenses, newExpense])
   }
   return (
-    <>
+    <Container>
       <NavBar/>
       <div className="d-flex">
         <ExpensesForm clearExpenses={clearExpenses} group={group} setExpenses={expensesHelper}/>
@@ -88,6 +89,6 @@ export default function GroupPage() {
         <OwesList owes={owes}/>
       </div>
       <InviteButton group={group} copyToClipBoard={copyToClipBoard}/>
-    </>
+    </Container>
   );
 }
