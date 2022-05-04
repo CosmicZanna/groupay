@@ -26,7 +26,6 @@ export default function Signup() {
             if (tokenFromUser) {
                 tokenFromUser.then( async (t: string) => {
                     await apiServices.register(t, user.user!.uid, nameRef.current!.value);
-                    console.log('tokeeeen', t)
                     navigate('/');
                 })
             } else {

@@ -45,7 +45,7 @@ export default function CreateGroup() {
                 value={value}
               />
             </Form.Group>
-            <Button disabled={value.length < 2} variant="primary" type="submit">
+            <Button id="create-group-button" disabled={value.length < 2} variant="primary" type="submit">
               Submit
             </Button>
           </Form>

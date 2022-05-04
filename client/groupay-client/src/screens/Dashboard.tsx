@@ -31,8 +31,8 @@ export default function Dashboard() {
       setgroupButtons(groupList);
     };
 
-    if (token) fetchGroups();
-  }, [token]);
+    if (token && currentUser!.uid) fetchGroups();
+  }, [token, currentUser]);
 
   return (
     <div>

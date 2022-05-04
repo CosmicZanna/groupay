@@ -6,4 +6,8 @@ const development = {
   database: process.env.DB || 'groupay',
 };
 
+if(process.env.APP_ENV == 'test'){
+  development.database = 'groupay_test'
+}
+
 export { development };

@@ -16,14 +16,12 @@ export default function CreateExpense({ group, setExpenses }: CreateExpenseProp)
   const [activeUser, setActiveUser] = useState<User>()
   const titleRef = useRef<HTMLInputElement>(null);
   const valueRef = useRef<HTMLInputElement>(null);
-  const currRef = useRef<HTMLInputElement>(null);
   ///const imgRef = useRef(); NOT MVP
   const { currentUser, token } = useAuth();
 
 
   useEffect(() => {
     if(currentUser){
-      console.log('currentUser exists');
     apiServices
         .getUser(token!, currentUser.uid)
         .then((user) => {setActiveUser(user)});}
@@ -49,7 +47,11 @@ export default function CreateExpense({ group, setExpenses }: CreateExpenseProp)
           newExpense
         );
         console.log(newExpense, '<- new expense');
-        setExpenses(newExpense)
+        setExpenses(newExpense);
+        titleRef.current!.value = '';
+        valueRef.current!.value = '';
+        setCurr('Currency');
+        setTag('🏷️ Tag');
       } catch (error) {
         console.log(error);
       }
@@ -93,7 +95,7 @@ export default function CreateExpense({ group, setExpenses }: CreateExpenseProp)
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                  {tag}
               </Dropdown.Toggle>
-              <Dropdown.Menu ref={currRef}>
+              <Dropdown.Menu>
               <Dropdown.Item onClick={()=>setTag('💵')} >💵 Bill</Dropdown.Item>
                 <Dropdown.Item onClick={()=>setTag('🏠')}>🏠 House</Dropdown.Item>
                 <Dropdown.Item onClick={()=>setTag('⚽')}>⚽ Fun</Dropdown.Item>
