@@ -15,7 +15,7 @@ const PORT = development.port;
 
 (async function bootstrap(){
   await mongoose.connect(`mongodb://${development.domain}/${development.database}`);
-  
+  console.log(development);
   
   console.log('Connection has been established successfully.');
   app.listen(PORT, ()=> console.log(`running on port ${PORT}`));

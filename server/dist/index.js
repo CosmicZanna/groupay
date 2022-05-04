@@ -27,6 +27,7 @@ const PORT = config_1.development.port;
 (function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         yield mongoose_1.default.connect(`mongodb://${config_1.development.domain}/${config_1.development.database}`);
+        console.log(config_1.development);
         console.log('Connection has been established successfully.');
         app.listen(PORT, () => console.log(`running on port ${PORT}`));
     });
