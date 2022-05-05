@@ -44,8 +44,8 @@ describe('GroupCard', () => {
     expect(title).toBeInTheDocument();
   });
 
-  it('should have a button', async () => {
-    const button = screen.getByRole('button');
-    expect(button.textContent).toBe('Go to group');
+  it('should have two buttons', async () => {
+    const button = screen.getAllByRole('button');
+    expect(button.length).toBe(2);
   });
 });

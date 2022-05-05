@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from "react-router-dom"
 import { AuthProvider } from '../context/AuthContext';
 import { act } from 'react-dom/test-utils';
-import GroupPage from '../components/GroupPage';
+import GroupPage from '../screens/GroupPage';
 
 jest.mock("../components/CreateExpense",  () => () => {
   const MockName = "default-awesome-component-mock";

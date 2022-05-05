@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from "react-router-dom"
 import { AuthProvider } from '../context/AuthContext';
 import { act } from 'react-dom/test-utils';
-import Dashboard from '../components/Dashboard';
+import Dashboard from '../screens/Dashboard';
 
 
 
